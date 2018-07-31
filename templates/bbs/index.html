@@ -1,0 +1,113 @@
+{% extends 'base.html' %} 
+<!-- 模板继承目标是base.html,该网页为本网站主干部分内容，利用bootstrap辅助 -->
+{% load custom_tags %}
+
+{% block page-container %}
+    {# <div class="wrap-left"> #}
+      {# <div class="new_article_notify hide">你有<span></span>新消息</div> #}
+<main class="col-md-8 main-content">
+{% for article in article_list reversed %}
+<!-- 展示文章板块 -->
+<article id="{{article.title}}" class="post">
+
+    <div class="post-head">
+        <h1 class="post-title"><a href="{% url 'article_detail' article.id %}">{{article.title}}</a></h1>
+        <div class="post-meta">
+            <span class="author">作者：<a href="http://www.ghostchina.com/author/wangsai/">{{article.author.name}}</a></span> •
+            <time class="post-date" datetime="2017年7月29日星期六凌晨1点45分" title="2017年7月29日星期六凌晨1点45分">2017年7月29日</time>
+        </div>
+    </div>
+    <div class="featured-media">
+        <a href="{% url 'article_detail' article.id %}"><img src="/static/{{ article.head_img | truncate_url }}" alt="{{article.title}}"></a>
+    </div>
+    <div class="post-content">
+        <p>大约四年前，我们在 Kickstarter 上推出了一个还处在原型阶段的 Ghost，这个小小的原型寄托了我们的一个想法，那就是创建 Web 上的下一代伟大的开源博客平台。 在初期阶段，我们真的只是专注于让所有功能能够运转起来。Ghost 是 Node.js 平台上为数不多的一个</p>
+    </div>
+    <div class="post-permalink">
+        <a href="{% url 'article_detail' article.id %}" class="btn btn-default">阅读全文</a>
+    </div>
+
+    <footer class="post-footer clearfix">
+        <div class="pull-left tag-list">
+            <i class="fa fa-folder-open-o"></i>
+            
+        </div>
+        <div class="pull-right share">
+        </div>
+    </footer>
+</article>
+{% endfor %}
+<!-- 分页功能 -->
+<nav class="pagination" role="navigation">
+    <span class="page-number">第 1 页 ⁄ 共 9 页</span>
+        <a class="older-posts" href="http://www.ghostchina.com/page/2/"><i class="fa fa-angle-right"></i></a>
+</nav>
+</main>
+<aside class="col-md-4 sidebar">
+    <div class="widget">
+        <p align="center"><a href="game/">单击有惊喜哦！</a></p>
+    </div>
+    {# <div class="clear-both"></div> #}
+
+<!-- start tag cloud widget -->
+<div class="widget">
+  <h4 class="title">COMMUNITY</h4>
+  <div class="content community">
+    <p>QQ:1763239924</p>
+    <p><a href="http://localhost:8000/bbs/#" title="BBS社区" target="_blank" onclick="_hmt.push([&#39;_trackEvent&#39;, &#39;big-button&#39;, &#39;click&#39;, &#39;问答社区&#39;])"><i class="fa fa-comments"></i> BBS</a></p>
+    <p><a href="http://github/Atuski" title="欢迎fork" target="_blank" onclick="_hmt.push([&#39;_trackEvent&#39;, &#39;big-button&#39;, &#39;click&#39;, &#39;官方微博&#39;])"><i class="fa fa-weibo"></i>GITHUB</a></p>
+  </div>
+</div>
+<!-- end tag cloud widget --> 
+<!-- start widget -->
+<div class="widget">
+  <h4 class="title">CHAT</h4>
+  <div class="content download">
+    <a href="{% url 'chat_dashboard' %}" class="btn btn-default btn-block" >WEB聊天室</a>
+  </div>
+</div>
+<!-- end widget --> 
+</aside>
+<!-- 返回顶部 -->
+<a href="http://localhost:8000/bbs/#" id="back-to-top" style="display: block;"><i class="fa fa-angle-up"></i></a>
+
+<!-- 添加版权声明和入网许可证，大雾！ -->
+
+<!--//首先要等文档数加载完成后在执行定时任务-->
+
+<script src="static/bootstrap/css/jquery_1.11.3_jquery.min.js"></script>
+    <script src="static/bootstrap/css/bootstrap_3.3.7_js_bootstrap.min.js"></script>
+    <script src="static/bootstrap/css/fitvids_1.1.0_jquery.fitvids.min.js"></script>
+    <script src="static/bootstrap/css/highlight.js_8.5_highlight.min.js"></script>
+    <script src="static/bootstrap/css/magnific-popup.js_1.0.0_jquery.magnific-popup.min.js"></script>
+    <script src="static/bootstrap/css/main.js"></script>
+    <script>
+        $(function(){
+            $('.post-content img').each(function(item){
+                var src = $(this).attr('src');
+
+                $(this).wrap('<a href="' + src + '" class="mfp-zoom" style="display:block;"></a>');
+            });
+
+            /*$('.post-content').magnificPopup({
+              delegate: 'a',
+              type: 'image'
+            });*/
+        });
+    </script>
+
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+    <script>
+    $(function(){
+        var version = '0.7.4';
+        var $download =  $('.download > a').first();
+        var html = $download.html().replace(/\d\.\d\.\d/, version);
+        
+        $download.html(html);
+    });
+</script>
+<div style="position: static; width: 0px; height: 0px; border: none; padding: 0px; margin: 0px;"><div id="trans-tooltip"><div id="tip-left-top" style="background: url(&quot;chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-left-top.png&quot;);"></div><div id="tip-top" style="background: url(&quot;chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-top.png&quot;) repeat-x;"></div><div id="tip-right-top" style="background: url(&quot;chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-right-top.png&quot;);"></div><div id="tip-right" style="background: url(&quot;chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-right.png&quot;) repeat-y;"></div><div id="tip-right-bottom" style="background: url(&quot;chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-right-bottom.png&quot;);"></div><div id="tip-bottom" style="background: url(&quot;chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-bottom.png&quot;) repeat-x;"></div><div id="tip-left-bottom" style="background: url(&quot;chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-left-bottom.png&quot;);"></div><div id="tip-left" style="background: url(&quot;chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-left.png&quot;);"></div><div id="trans-content"></div></div><div id="tip-arrow-bottom" style="background: url(&quot;chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-arrow-bottom.png&quot;);"></div><div id="tip-arrow-top" style="background: url(&quot;chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-arrow-top.png&quot;);"></div></div></body></html>
+
+{% endblock %}
