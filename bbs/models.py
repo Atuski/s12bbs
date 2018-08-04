@@ -37,6 +37,7 @@ class Article(models.Model):
     class Meta:
         verbose_name = u"帖子表"
         verbose_name_plural = u"帖子表"
+        ordering = ['-last_modify',]
 
 # 评论表
 class Comment(models.Model):
