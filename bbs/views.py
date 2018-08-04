@@ -6,8 +6,8 @@ from django.contrib.auth import authenticate,login,logout
 from .forms import RegisterForm
 import json
 from bbs import comment_hander
-from bbs import forms
-
+from bbs import forms  
+from django.core.paginator import Paginator
 # Create your views here.
 
 category_list = models.Category.objects.filter(set_as_top_menu =True).order_by('positon_index')
@@ -17,9 +17,14 @@ def index(request):
         category_obj = models.Category.objects.get(positon_index=1)
         # category_obj = models.Category.objects.get(id=1)
         article_list = models.Article.objects.filter(status='published')
+        page_of_list = Paginator(article_list,3)#所有页的对象
+        page_num = request.GET.get('page',1)#get返回的页数
+        someone_page_list = page_of_list.page(page_num)#某页的对象
         return render(request,"bbs/index.html",{'category_list':category_list,
                                                 'category_obj':category_obj,
-                                                'article_list':article_list})
+                                                'article_list':article_list,
+                                                'page_of_list':page_of_list,
+                                                'someone_page_list':someone_page_list,})
         # return render(request, "bbs/index.html",{'category_list':category_list,'article_list':article_list})
     # return HttpResponse("OK")
 
@@ -30,9 +35,11 @@ def category(request,id):
         article_list = models.Article.objects.filter(status='published')
     else:
         article_list = models.Article.objects.filter(category_id = category_obj.id,status='published')
-    return render(request,"bbs/index.html",{'category_list':category_list,
+
+    return render(request,"bbs/all.html",{'category_list':category_list,
                                             'category_obj':category_obj,
-                                            'article_list':article_list})
+                                            'article_list':article_list,
+                                            })
 
 
 def acc_logout(request):
