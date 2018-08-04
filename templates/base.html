@@ -1,4 +1,4 @@
-<!DOCTYPE html>  
+<!DOCTYPE html>   
 <!-- saved from url=(0049)http://v3.bootcss.com/examples/navbar-static-top/ -->
 <html lang="en">
   <head>
@@ -88,7 +88,7 @@ var _hmt = _hmt || [];
                     <div class="navbar-collapse collapse" id="main-menu" aria-expanded="false" style="height: 1px;">
                         <ul class="menu">
         <li class="nav-current" role="presentation">
-        <a href="#">首页</a></li>
+        <a href="{% url 'index' %}">首页</a></li>
          {% for category in category_list %}
               {% if category.id == category_obj.id %}
                 <li class="active"><a href="{% url 'category_detail'  category.id  %}">{{ category.name }}</a></li>
