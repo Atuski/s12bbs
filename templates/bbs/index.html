@@ -6,22 +6,22 @@
     {# <div class="wrap-left"> #}
       {# <div class="new_article_notify hide">你有<span></span>新消息</div> #}
 <main class="col-md-8 main-content">
-{% for article in article_list reversed %}
+{% for article in someone_page_list reversed %}
 <!-- 展示文章板块 -->
 <article id="{{article.title}}" class="post">
 
     <div class="post-head">
         <h1 class="post-title"><a href="{% url 'article_detail' article.id %}">{{article.title}}</a></h1>
         <div class="post-meta">
-            <span class="author">作者：<a href="http://www.ghostchina.com/author/wangsai/">{{article.author.name}}</a></span> •
-            <time class="post-date" datetime="2017年7月29日星期六凌晨1点45分" title="2017年7月29日星期六凌晨1点45分">2017年7月29日</time>
+            <span class="author">作者：<a href="#">{{article.author.name}}</a></span> •
+            <time class="post-date" datetime="" title="">{{ article.last_modify }}</time>
         </div>
     </div>
     <div class="featured-media">
         <a href="{% url 'article_detail' article.id %}"><img src="/static/{{ article.head_img | truncate_url }}" alt="{{article.title}}"></a>
     </div>
     <div class="post-content">
-        <p>大约四年前，我们在 Kickstarter 上推出了一个还处在原型阶段的 Ghost，这个小小的原型寄托了我们的一个想法，那就是创建 Web 上的下一代伟大的开源博客平台。 在初期阶段，我们真的只是专注于让所有功能能够运转起来。Ghost 是 Node.js 平台上为数不多的一个</p>
+        <p>{{ article.brief }}</p>
     </div>
     <div class="post-permalink">
         <a href="{% url 'article_detail' article.id %}" class="btn btn-default">阅读全文</a>
@@ -38,10 +38,57 @@
 </article>
 {% endfor %}
 <!-- 分页功能 -->
-<nav class="pagination" role="navigation">
-    <span class="page-number">第 1 页 ⁄ 共 9 页</span>
-        <a class="older-posts" href="http://www.ghostchina.com/page/2/"><i class="fa fa-angle-right"></i></a>
+
+<nav aria-label="Page navigation">
+  <ul class="pager">
+  {% if someone_page_list.has_previous %}
+    <li><a href="/bbs/?page={{someone_page_list.previous_page_number}}">Previous</a></li>
+    {% else %}
+    <li class="disabled"><a href="#">Previous</a></li>
+    {% endif %}
+    <li>第 {{someone_page_list.number}}页 ⁄ 共 {{ page_of_list.num_pages }} 页</li>
+    {% if someone_page_list.has_next %}
+    <li><a href="/bbs/?page={{someone_page_list.next_page_number}}">Next</a></li>
+    {% else %}
+    <li class="disabled"><a>Next</a></li>
+    {% endif %}
+  </ul>
 </nav>
+<!-- <nav aria-label="Page navigation">
+  <ul class="pagination" role="navigation">
+    {% if page_of_list.has_previous %}
+    <li>
+      <a href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    {% else %}
+    <li>
+      <a href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    {% endif %}
+    {% for p_num in page_of_list.page_range %}
+    <li><a href="#">{{ p_num }}</a></li>
+    {% endfor %}
+    {% if page_of_list.has_next %}
+    <li>
+      <a href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+    {% else %}
+    <li>
+      <a href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+    {% endif %}
+  </ul>
+</nav>
+ -->
+<!-- 小游戏模块 -->
 </main>
 <aside class="col-md-4 sidebar">
     <div class="widget">
