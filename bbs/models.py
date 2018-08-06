@@ -17,7 +17,8 @@ class Article(models.Model):
     last_modify = models.DateField(auto_now=True,verbose_name=u"修改时间")
     # 需要注意的是一旦设置auto_now=True ,默认在admin后台就是非编辑状态了,也就是在admin后台此字段为隐藏,除非手动设置可编辑属性
     # auto_now 用于修改,auto_now_add用于创建,在admin后台都是默认不可编辑(隐藏)
-
+    #阅读数
+    read_num = models.IntegerField(default=0)
     priority = models.IntegerField(default=1000,verbose_name=u"优先级")
     status_choices = (('draft',u"草稿"),
                       ('published',u"已发布"),
