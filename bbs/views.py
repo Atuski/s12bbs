@@ -106,8 +106,12 @@ def register(request):
 def ariticle_detail(request,id):
     ariticle_obj = models.Article.objects.get(id = id)
     comment_tree = comment_hander.build_tree(ariticle_obj.comment_set.select_related())  #在这里将这片文章所有的评论传给build_tree函数,生成一个有层级关系的字典
-    return render(request,'bbs/article_detail.html',{'article_obj':ariticle_obj,'category_list':category_list})
-
+    if not request.COOKIES.get(id):
+        ariticle_obj.read_num += 1
+        ariticle_obj.save()
+    response = render(request,'bbs/article_detail.html',{'article_obj':ariticle_obj,'category_list':category_list})
+    response.set_cookie(id,'true')
+    return response 
 
 def comment(request):
     print(request.POST)
