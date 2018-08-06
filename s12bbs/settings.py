@@ -25,7 +25,7 @@ SECRET_KEY = 'q3zd6@3@#fsf_3h^1225!p+dez5)wcl^c6n&u*g@dhv&0y7j)r'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -87,7 +87,7 @@ DATABASES = {
         'HOST':'127.0.0.1',
         'PORT':'3306',
         'USER':'root',
-        'PASSWORD':'123456',
+        'PASSWORD':'mysit1234',
     }
 }
 
@@ -128,11 +128,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/static/'  #访问路径
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "statics"),
     os.path.join(BASE_DIR, "uploads"),
     # '/var/www/static/',
+    
 ]
 
 
