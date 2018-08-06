@@ -16,10 +16,11 @@ Including another URLconf
 from django.conf.urls import url,include
 from django.contrib import admin
 from bbs import views
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 urlpatterns = [
 
     url(r'^admin/', admin.site.urls),
-    url(r'^bbs/', include("bbs.urls")),
+    url(r'^bbs/', include("bbs.urls"),),
     # url(r'^$', include("bbs.urls")),
     url(r'^chat/', include("webchat.urls")),
     # 新增的代码
@@ -29,3 +30,4 @@ urlpatterns = [
 
 
 ]
+urlpatterns += staticfiles_urlpatterns()
